@@ -9,6 +9,7 @@ export default function App() {
   return (
     <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
       <h1>Project Frontend</h1>
+      <p style={{ color: '#2563eb', fontWeight: 'bold' }}>Test change from branch 1-F-1</p>
       <p>{message}</p>
     </div>
   )
