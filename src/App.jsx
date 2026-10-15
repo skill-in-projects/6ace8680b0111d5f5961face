@@ -8,7 +8,7 @@ export default function App() {
   )
   return (
     <div style={{ padding: '2rem', fontFamily: 'sans-serif' }}>
-      <h1>Project Frontend</h1>
+      <h1>Project Frontend!</h1>
       <p>{message}</p>
     </div>
   )
