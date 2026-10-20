@@ -3,357 +3,180 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AccessDine - Find restaurants that welcome everyone</title>
-    <meta name="description" content="AccessDine helps you find restaurants with step-free entry, accessible restrooms, readable menus and quiet hours, verified by diners who use them.">
-    <meta name="theme-color" content="#120E1F">
+    <title>Your Product</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:opsz,wght@9..144,700;9..144,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #120E1F;
-            --bg-2: #1A1430;
-            --surface: #211A3A;
-            --surface-2: #2A2147;
-            --border: #3B3160;
-            --text: #F7F3FF;
-            --text-muted: #CFC6E8;
-            --coral: #FF7A6B;
-            --amber: #FFC25C;
-            --teal: #3EE0C4;
-            --violet: #B49CFF;
-            --pink: #FF8FC7;
-            --sky: #7CC8FF;
-            --focus: #FFE066;
-            --radius: 18px;
-            --grad: linear-gradient(100deg, var(--coral) 0%, var(--amber) 35%, var(--teal) 70%, var(--violet) 100%);
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before { transition: none !important; animation: none !important; } }
-        body { font-family: 'Atkinson Hyperlegible', system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 1.125rem; line-height: 1.6; overflow-x: hidden; }
-        a { color: var(--teal); text-underline-offset: 3px; }
-        :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 8px; }
-        svg.lucide { width: 22px; height: 22px; flex-shrink: 0; }
-        .wrap { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
-        h1, h2, h3 { font-family: 'Fraunces', Georgia, serif; letter-spacing: -.01em; }
+        body { font-family: Inter, system-ui, sans-serif; background: #1A1B1E; color: #E5E7EB; font-size: 14px; min-height: 100vh; }
+        a { color: inherit; text-decoration: none; }
+        button { font: inherit; background: none; cursor: pointer; }
+        svg.lucide { width: 18px; height: 18px; }
 
-        .skip-link { position: absolute; left: 16px; top: -60px; background: var(--amber); color: #1A1430; padding: 10px 18px; border-radius: 10px; font-weight: 700; z-index: 20; text-decoration: none; }
-        .skip-link:focus { top: 12px; }
+        nav { display: flex; align-items: center; gap: 16px; padding: 14px 8%; border-bottom: 1px solid #2A2B2F; }
+        .brand { display: flex; gap: 10px; align-items: center; }
+        .brand .mark { width: 36px; height: 36px; border-radius: 8px; background: #4FBF9F; display: grid; place-items: center; color: #fff; }
+        .brand b { font-size: 18px; display: block; color: #fff; }
+        .brand small { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .12em; color: #4FBF9F; }
+        .links { margin: 0 auto; display: flex; gap: 24px; color: #A1A1AA; }
+        .links a:hover { color: #fff; }
+        .cta { background: #4FBF9F; color: #fff; padding: 9px 20px; border-radius: 8px; font-weight: 600; display: inline-block; }
 
-        header.site { position: sticky; top: 0; z-index: 10; background: rgba(18,14,31,.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
-        header.site .wrap { display: flex; align-items: center; gap: 20px; min-height: 72px; flex-wrap: wrap; }
-        .brand { display: flex; align-items: center; gap: 10px; font-family: 'Fraunces', Georgia, serif; font-weight: 800; font-size: 1.45rem; color: var(--text); text-decoration: none; }
-        .brand-mark { width: 42px; height: 42px; border-radius: 12px; background: var(--grad); color: #1A1430; display: grid; place-items: center; }
-        nav.main { margin-left: auto; }
-        nav.main ul { list-style: none; display: flex; gap: 26px; align-items: center; }
-        nav.main a { color: var(--text-muted); text-decoration: none; font-weight: 700; padding: 6px 2px; }
-        nav.main a:hover { color: var(--text); text-decoration: underline; text-decoration-color: var(--coral); text-decoration-thickness: 3px; }
+        .hero { text-align: center; padding: 80px 8% 50px; background: radial-gradient(ellipse at 50% 30%, #23302D 0%, transparent 60%); }
+        .pill { display: inline-block; border: 1px solid #2F5F51; border-radius: 999px; padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #4FBF9F; }
+        h1 { font-size: clamp(32px, 4.5vw, 60px); line-height: 1.1; margin: 28px 0 20px; color: #fff; }
+        h1 em { font-style: normal; color: #4FBF9F; }
+        .hero p { max-width: 660px; margin: 0 auto; color: #A1A1AA; font-size: 18px; line-height: 1.55; }
+        .btns { margin-top: 36px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        .btns .cta { padding: 12px 28px; }
+        .ghost { border: 1px solid #3F3F46; padding: 12px 28px; border-radius: 8px; font-weight: 600; }
 
-        .btn { display: inline-flex; align-items: center; gap: 8px; min-height: 50px; padding: 12px 26px; border-radius: 999px; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; border: 2px solid transparent; transition: transform .15s ease, box-shadow .15s ease; }
-        .btn:hover { transform: translateY(-2px); }
-        .btn-primary { background: linear-gradient(100deg, var(--coral), var(--amber)); color: #1A1430; box-shadow: 0 8px 24px rgba(255,122,107,.35); }
-        .btn-secondary { background: transparent; color: var(--text); border-color: var(--violet); }
-        .btn-secondary:hover { background: rgba(180,156,255,.12); }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; padding: 30px 8% 60px; }
+        .stat { border: 1px solid #2A2B2F; background: #222327; border-radius: 12px; padding: 24px; text-align: center; }
+        .stat b { font-size: 28px; color: #fff; display: block; }
+        .stat span { color: #A1A1AA; }
 
-        .hero { position: relative; padding: 88px 0 72px; isolation: isolate; }
-        .hero::before, .hero::after { content: ''; position: absolute; border-radius: 50%; filter: blur(90px); z-index: -1; opacity: .55; }
-        .hero::before { width: 520px; height: 520px; background: var(--coral); top: -160px; left: -140px; opacity: .35; }
-        .hero::after { width: 560px; height: 560px; background: var(--violet); bottom: -220px; right: -160px; opacity: .35; }
-        .hero .wrap { display: grid; grid-template-columns: 1.15fr 1fr; gap: 52px; align-items: center; }
-        .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: .95rem; padding: 6px 14px; border-radius: 999px; background: rgba(62,224,196,.12); color: var(--teal); border: 1px solid rgba(62,224,196,.35); margin-bottom: 20px; }
-        h1 { font-size: clamp(2.5rem, 5.6vw, 4rem); line-height: 1.05; margin-bottom: 22px; }
-        .grad-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .hero p.lead { font-size: 1.25rem; color: var(--text-muted); max-width: 560px; margin-bottom: 30px; }
-        .hero .actions { display: flex; gap: 14px; flex-wrap: wrap; }
+        .s-apis { padding: 10px 8% 50px; text-align: center; border-top: 1px solid #2A2B2F; }
+        .s-apis .pill { margin-top: 40px; }
+        .s-apis h2 { color: #fff; font-size: clamp(24px, 3vw, 34px); margin: 18px 0 8px; }
+        .s-sub { color: #A1A1AA; margin-bottom: 28px; }
+        .api-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; text-align: left; }
+        .api-card { border: 1px solid #2A2B2F; background: #222327; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+        .api-top { display: flex; align-items: center; gap: 10px; color: #fff; }
+        .api-ic { width: 30px; height: 30px; border-radius: 8px; background: rgba(79,191,159,.12); color: #4FBF9F; display: grid; place-items: center; }
+        .api-ic svg.lucide { width: 16px; height: 16px; }
+        .api-card p { color: #A1A1AA; font-size: 13px; line-height: 1.45; flex: 1; }
+        .api-foot { display: flex; align-items: flex-start; gap: 8px; }
+        .api-res { flex: 1; min-width: 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #4FBF9F; overflow-wrap: anywhere; }
+        .api-res.error, .api-res .error { color: #F87171; }
+        .api-res pre, .api-res code { white-space: pre-wrap; }
+        .api-test { padding: 5px 14px; border-radius: 8px; border: 1px solid #3F3F46; color: #E5E7EB; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+        .api-test:hover { border-color: #4FBF9F; color: #4FBF9F; }
+        .api-test:disabled { opacity: .6; cursor: default; }
 
-        .search { background: linear-gradient(180deg, var(--surface-2), var(--surface)); border: 1px solid var(--border); border-radius: 24px; padding: 28px; box-shadow: 0 30px 80px rgba(0,0,0,.45); position: relative; }
-        .search::before { content: ''; position: absolute; inset: -2px; border-radius: 26px; background: var(--grad); z-index: -1; opacity: .7; }
-        .search h2 { font-size: 1.5rem; margin-bottom: 18px; }
-        .field { margin-bottom: 18px; }
-        .field label, fieldset legend { display: block; font-weight: 700; margin-bottom: 8px; }
-        .field input { width: 100%; min-height: 50px; padding: 10px 16px; font: inherit; color: var(--text); background: var(--bg); border: 2px solid var(--border); border-radius: 12px; }
-        .field input::placeholder { color: #A99FCB; }
-        .field input:focus-visible { border-color: var(--focus); }
-        fieldset { border: none; margin-bottom: 20px; }
-        .chips { display: flex; flex-wrap: wrap; gap: 10px; }
-        .chip { position: relative; }
-        .chip input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-        .chip span { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 8px 16px; border-radius: 999px; border: 2px solid var(--border); background: var(--bg-2); color: var(--text-muted); cursor: pointer; font-weight: 700; font-size: 1rem; }
-        .chip span::before { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--c); }
-        .chip input:checked + span { border-color: var(--c); color: var(--text); background: color-mix(in srgb, var(--c) 18%, var(--bg-2)); }
-        .chip input:checked + span::after { content: '\2713'; color: var(--c); }
-        .chip input:focus-visible + span { outline: 3px solid var(--focus); outline-offset: 3px; }
-        .search .btn { width: 100%; justify-content: center; }
-        .search-status { margin-top: 14px; color: var(--amber); font-weight: 700; min-height: 1.6em; }
+        footer { padding: 18px 8%; border-top: 1px solid #2A2B2F; color: #71717A; font-size: 12px; display: flex; align-items: center; gap: 8px; }
+        footer img { height: 22px; width: auto; opacity: .85; }
 
-        section { padding: 84px 0; position: relative; }
-        .section-head { max-width: 700px; margin-bottom: 44px; }
-        .kicker { display: block; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .9rem; color: var(--c, var(--coral)); margin-bottom: 10px; }
-        h2 { font-size: clamp(1.9rem, 3.8vw, 2.7rem); line-height: 1.15; margin-bottom: 14px; }
-        .section-head p { color: var(--text-muted); }
-
-        .spots { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; list-style: none; }
-        .spot { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; }
-        .spot-art { height: 150px; display: grid; place-items: center; color: #1A1430; background: var(--art); }
-        .spot-art svg.lucide { width: 56px; height: 56px; stroke-width: 1.6; }
-        .spot-body { padding: 20px 22px 24px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
-        .spot h3 { font-size: 1.3rem; }
-        .spot .meta { color: var(--text-muted); font-size: 1rem; }
-        .badges { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin-top: auto; padding-top: 8px; }
-        .badges li { font-size: .9rem; font-weight: 700; padding: 4px 12px; border-radius: 999px; color: var(--c); border: 1.5px solid var(--c); background: color-mix(in srgb, var(--c) 12%, transparent); }
-
-        .alt { background: var(--bg-2); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; list-style: none; }
-        .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; border-top: 4px solid var(--c); transition: transform .15s ease; }
-        .card:hover { transform: translateY(-4px); }
-        .card .icon { width: 52px; height: 52px; border-radius: 14px; background: color-mix(in srgb, var(--c) 18%, transparent); color: var(--c); display: grid; place-items: center; margin-bottom: 16px; }
-        .card h3 { font-size: 1.25rem; margin-bottom: 6px; }
-        .card p { color: var(--text-muted); }
-
-        ol.steps { list-style: none; counter-reset: step; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        ol.steps li { counter-increment: step; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; }
-        ol.steps li::before { content: counter(step); display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--c); color: #1A1430; font-family: 'Fraunces', Georgia, serif; font-weight: 800; font-size: 1.3rem; margin-bottom: 16px; }
-        ol.steps h3 { font-size: 1.25rem; margin-bottom: 6px; }
-        ol.steps p { color: var(--text-muted); }
-
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; list-style: none; }
-        .stats li { text-align: center; padding: 30px 20px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); }
-        .stats strong { display: block; font-family: 'Fraunces', Georgia, serif; font-size: 2.8rem; line-height: 1.1; color: var(--c); }
-        .stats span { color: var(--text-muted); }
-        blockquote { margin-top: 36px; background: var(--surface); border-radius: var(--radius); padding: 32px; border: 1px solid var(--border); border-left: 6px solid var(--pink); max-width: 780px; font-size: 1.3rem; }
-        blockquote footer { margin-top: 12px; font-size: 1rem; color: var(--text-muted); }
-
-        .cta-band .panel { text-align: center; padding: 56px 28px; border-radius: 28px; background: radial-gradient(circle at 20% 20%, rgba(255,122,107,.35), transparent 50%), radial-gradient(circle at 80% 80%, rgba(62,224,196,.3), transparent 50%), var(--surface-2); border: 1px solid var(--border); }
-        .cta-band p { color: var(--text-muted); max-width: 620px; margin: 0 auto 28px; }
-        .cta-band .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-
-        footer.site { border-top: 1px solid var(--border); padding: 28px 0; color: var(--text-muted); font-size: 1rem; }
-        footer.site .wrap { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: space-between; }
-        footer.site img { height: 22px; width: auto; }
-
-        @media (max-width: 880px) {
-            .hero .wrap { grid-template-columns: 1fr; }
-            nav.main ul { gap: 16px; flex-wrap: wrap; }
-        }
-        @media (max-width: 560px) {
-            nav.main { width: 100%; margin-left: 0; padding-bottom: 12px; }
-            header.site { position: static; }
-        }
+        @media (max-width: 640px) { .links { display: none; } nav { justify-content: space-between; } }
     </style>
 </head>
 <body>
-    <a class="skip-link" href="#main">Skip to main content</a>
+    <!-- Starter landing page of your squad's product. Edit it freely: as your product takes shape, this page becomes its home. -->
+    <nav>
+        <div class="brand"><div class="mark"><i data-lucide="box"></i></div><div><b>Your Product</b><small>NAME COMING SOON</small></div></div>
+        <div class="links"><a href="#modules">Modules</a><a href="#starterApis">APIs</a><a href="#team">Team</a><a href="#contact">Contact</a></div>
+        <a class="cta" href="#starterApis">Get Started</a>
+    </nav>
 
-    <header class="site">
-        <div class="wrap">
-            <a class="brand" href="#top" aria-label="AccessDine home">
-                <span class="brand-mark" aria-hidden="true"><i data-lucide="utensils-crossed"></i></span>
-                AccessDine
-            </a>
-            <nav class="main" aria-label="Main">
-                <ul>
-                    <li><a href="#spots">Discover</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#how-it-works">How it works</a></li>
-                    <li><a href="#restaurants">For restaurants</a></li>
-                </ul>
-            </nav>
-        </div>
+    <header class="hero">
+        <span class="pill">&#9679; LAUNCHING SOON &middot; BUILT BY YOUR SQUAD</span>
+        <h1>Something Great<br><em>Is Being Built Here</em></h1>
+        <p>This is your squad's product landing page, live on the web. Every merge brings your work here. When your product takes shape, this page becomes its home.</p>
+        <div class="btns"><a class="cta" href="#modules">Start Building &rarr;</a><a class="ghost" href="#starterApis">Explore Starter APIs</a></div>
     </header>
 
-    <main id="main" tabindex="-1">
-        <section class="hero" id="top" aria-labelledby="hero-title">
-            <div class="wrap">
-                <div>
-                    <span class="eyebrow"><i data-lucide="sparkles" aria-hidden="true"></i> Dining out, without the guesswork</span>
-                    <h1 id="hero-title">Great food. <span class="grad-text">Open doors.</span> Every table.</h1>
-                    <p class="lead">AccessDine shows you which restaurants have step-free entry, accessible restrooms, readable menus and quiet hours, checked by diners who actually use them.</p>
-                    <div class="actions">
-                        <a class="btn btn-primary" href="#find">Find a table <i data-lucide="arrow-right" aria-hidden="true"></i></a>
-                        <a class="btn btn-secondary" href="#spots">Explore restaurants</a>
-                    </div>
-                </div>
+    <section class="stats" id="modules">
+        <div class="stat"><b>7</b><span>APIs Ready</span></div>
+        <div class="stat"><b>0</b><span>Modules Live</span></div>
+        <div class="stat"><b>1</b><span>Sprint Started</span></div>
+    </section>
 
-                <form class="search" id="find" aria-labelledby="search-title" novalidate>
-                    <h2 id="search-title">Where are we eating tonight?</h2>
-                    <div class="field">
-                        <label for="location">City or address</label>
-                        <input id="location" name="location" type="text" autocomplete="address-level2" placeholder="For example: Tel Aviv">
-                    </div>
-                    <fieldset>
-                        <legend>I need</legend>
-                        <div class="chips">
-                            <label class="chip" style="--c: var(--teal)"><input type="checkbox" name="needs" value="step-free"><span>Step-free entry</span></label>
-                            <label class="chip" style="--c: var(--coral)"><input type="checkbox" name="needs" value="restroom"><span>Accessible restroom</span></label>
-                            <label class="chip" style="--c: var(--amber)"><input type="checkbox" name="needs" value="menu"><span>Braille / large-print menu</span></label>
-                            <label class="chip" style="--c: var(--violet)"><input type="checkbox" name="needs" value="quiet"><span>Quiet hours</span></label>
-                            <label class="chip" style="--c: var(--sky)"><input type="checkbox" name="needs" value="parking"><span>Accessible parking</span></label>
-                            <label class="chip" style="--c: var(--pink)"><input type="checkbox" name="needs" value="service-animal"><span>Service animals</span></label>
-                        </div>
-                    </fieldset>
-                    <button class="btn btn-primary" type="submit"><i data-lucide="search" aria-hidden="true"></i> Search restaurants</button>
-                    <p class="search-status" id="search-status" role="status" aria-live="polite"></p>
-                </form>
-            </div>
-        </section>
-
-        <section id="spots" aria-labelledby="spots-title">
-            <div class="wrap">
-                <div class="section-head">
-                    <span class="kicker" style="--c: var(--amber)">Diner favorites</span>
-                    <h2 id="spots-title">Places people love, and can get into</h2>
-                    <p>Example listings showing what every AccessDine page tells you at a glance.</p>
-                </div>
-                <ul class="spots">
-                    <li class="spot">
-                        <div class="spot-art" style="--art: linear-gradient(135deg, var(--coral), var(--amber))" aria-hidden="true"><i data-lucide="pizza"></i></div>
-                        <div class="spot-body">
-                            <h3>Forno Rosso</h3>
-                            <p class="meta">Italian &middot; Wood-fired pizza &middot; $$</p>
-                            <ul class="badges" aria-label="Accessibility features">
-                                <li style="--c: var(--teal)">Step-free</li>
-                                <li style="--c: var(--coral)">Accessible restroom</li>
-                                <li style="--c: var(--amber)">Large-print menu</li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="spot">
-                        <div class="spot-art" style="--art: linear-gradient(135deg, var(--teal), var(--sky))" aria-hidden="true"><i data-lucide="fish"></i></div>
-                        <div class="spot-body">
-                            <h3>Blue Harbor</h3>
-                            <p class="meta">Seafood &middot; Waterfront &middot; $$$</p>
-                            <ul class="badges" aria-label="Accessibility features">
-                                <li style="--c: var(--teal)">Step-free</li>
-                                <li style="--c: var(--sky)">Accessible parking</li>
-                                <li style="--c: var(--pink)">Service animals</li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="spot">
-                        <div class="spot-art" style="--art: linear-gradient(135deg, var(--violet), var(--pink))" aria-hidden="true"><i data-lucide="soup"></i></div>
-                        <div class="spot-body">
-                            <h3>Quiet Noodle</h3>
-                            <p class="meta">Asian &middot; Ramen bar &middot; $</p>
-                            <ul class="badges" aria-label="Accessibility features">
-                                <li style="--c: var(--violet)">Quiet hours</li>
-                                <li style="--c: var(--amber)">Braille menu</li>
-                                <li style="--c: var(--coral)">Accessible restroom</li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="alt" id="features" aria-labelledby="features-title">
-            <div class="wrap">
-                <div class="section-head">
-                    <span class="kicker" style="--c: var(--teal)">Features</span>
-                    <h2 id="features-title">Everything you need to know before you go</h2>
-                    <p>Every listing answers the questions you would otherwise have to call ahead and ask.</p>
-                </div>
-                <ul class="grid">
-                    <li class="card" style="--c: var(--teal)"><span class="icon" aria-hidden="true"><i data-lucide="accessibility"></i></span><h3>Mobility access</h3><p>Step-free entrances, ramp details, door widths, table heights and space to move between tables.</p></li>
-                    <li class="card" style="--c: var(--amber)"><span class="icon" aria-hidden="true"><i data-lucide="book-open"></i></span><h3>Readable menus</h3><p>Braille, large-print and screen-reader friendly digital menus, with allergen and ingredient info.</p></li>
-                    <li class="card" style="--c: var(--violet)"><span class="icon" aria-hidden="true"><i data-lucide="ear"></i></span><h3>Sensory friendly</h3><p>Noise levels by time of day, lighting notes and quiet hours for diners with sensory needs.</p></li>
-                    <li class="card" style="--c: var(--coral)"><span class="icon" aria-hidden="true"><i data-lucide="badge-check"></i></span><h3>Verified by diners</h3><p>Photos and reviews from people with disabilities, so the details are real and up to date.</p></li>
-                    <li class="card" style="--c: var(--pink)"><span class="icon" aria-hidden="true"><i data-lucide="calendar-check"></i></span><h3>Book with your needs</h3><p>Tell the restaurant what you need when you reserve, so your table is ready when you arrive.</p></li>
-                    <li class="card" style="--c: var(--sky)"><span class="icon" aria-hidden="true"><i data-lucide="map"></i></span><h3>Accessible directions</h3><p>Routes from transit and parking to the front door, avoiding stairs and steep slopes.</p></li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="how-it-works" aria-labelledby="how-title">
-            <div class="wrap">
-                <div class="section-head">
-                    <span class="kicker" style="--c: var(--violet)">How it works</span>
-                    <h2 id="how-title">From "Can I get in?" to "Table for four, please."</h2>
-                </div>
-                <ol class="steps">
-                    <li style="--c: var(--coral)"><h3>Set your needs</h3><p>Choose what matters to you once. We remember it for every search.</p></li>
-                    <li style="--c: var(--amber)"><h3>Find a match</h3><p>See restaurants that meet your needs, with photos and diner notes for each feature.</p></li>
-                    <li style="--c: var(--teal)"><h3>Book and share</h3><p>Reserve, then rate the visit so the next diner knows what to expect.</p></li>
-                </ol>
-            </div>
-        </section>
-
-        <section class="alt" aria-labelledby="impact-title">
-            <div class="wrap">
-                <div class="section-head">
-                    <span class="kicker" style="--c: var(--pink)">Why it matters</span>
-                    <h2 id="impact-title">Nobody should have to call ahead to eat out</h2>
-                    <p>Many diners skip restaurants because accessibility information is missing or wrong.</p>
-                </div>
-                <ul class="stats">
-                    <li style="--c: var(--coral)"><strong>1 in 6</strong><span>people worldwide live with a disability</span></li>
-                    <li style="--c: var(--teal)"><strong>12</strong><span>accessibility details on every listing</span></li>
-                    <li style="--c: var(--amber)"><strong>0</strong><span>phone calls needed before you go</span></li>
-                </ul>
-                <blockquote>
-                    <p>"I used to call three places before choosing one. Now I just check the listing and go."</p>
-                    <footer>Early tester, wheelchair user</footer>
-                </blockquote>
-            </div>
-        </section>
-
-        <section id="restaurants" aria-labelledby="restaurants-title">
-            <div class="wrap">
-                <div class="section-head">
-                    <span class="kicker" style="--c: var(--sky)">For restaurants</span>
-                    <h2 id="restaurants-title">Show guests you are ready for them</h2>
-                    <p>List your accessibility features for free, get a simple checklist to improve, and reach diners who are actively looking for places like yours.</p>
-                </div>
-                <ul class="grid">
-                    <li class="card" style="--c: var(--amber)"><span class="icon" aria-hidden="true"><i data-lucide="clipboard-list"></i></span><h3>Free self-audit</h3><p>A guided checklist that takes about 15 minutes.</p></li>
-                    <li class="card" style="--c: var(--teal)"><span class="icon" aria-hidden="true"><i data-lucide="users"></i></span><h3>New guests</h3><p>Appear in searches from diners filtering for your features.</p></li>
-                    <li class="card" style="--c: var(--violet)"><span class="icon" aria-hidden="true"><i data-lucide="message-circle"></i></span><h3>Real feedback</h3><p>Learn what works and what to fix, straight from your guests.</p></li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="cta-band" id="join" aria-labelledby="join-title">
-            <div class="wrap">
-                <div class="panel">
-                    <h2 id="join-title">Be among the first to <span class="grad-text">dine with AccessDine</span></h2>
-                    <p>We are building AccessDine with diners and restaurants. Join early access and help shape what we build next.</p>
-                    <div class="actions">
-                        <a class="btn btn-primary" href="#find">Start searching</a>
-                        <a class="btn btn-secondary" href="#restaurants">List your restaurant</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="site">
-        <div class="wrap">
-            <span>&copy; <span id="year">2026</span> AccessDine. Built by our squad.</span>
-            <img src="data:image/png;base64,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" alt="Made with Skill-in" class="made-with-skill-in" />
+    <section class="s-apis" id="starterApis">
+        <span class="pill">&#9679; STARTER APIS</span>
+        <h2>Ready when you are</h2>
+        <p class="s-sub">Pre-configured, free to use and already in your repo. Test them right from this page.</p>
+        <div class="api-grid">
+            <div class="api-card"><div class="api-top"><span class="api-ic"><i data-lucide="database"></i></span><b>Database</b></div><p>REST API and database connectivity (CRUD).</p><div class="api-foot"><span id="response" class="api-res"></span><button id="testButton" type="button" class="api-test" onclick="testBackend()">Test</button></div></div>
+            <div class="api-card"><div class="api-top"><span class="api-ic"><i data-lucide="map-pin"></i></span><b>Geocoding</b></div><p>Convert addresses to coordinates and back.</p><div class="api-foot"><span id="geocodingResponse" class="api-res"></span><button type="button" class="api-test" onclick="testGoogleApi('geocoding', this)">Test</button></div></div>
+            <div class="api-card"><div class="api-top"><span class="api-ic"><i data-lucide="map"></i></span><b>Maps JavaScript</b></div><p>Display interactive maps in the browser.</p><div class="api-foot"><span id="mapsResponse" class="api-res"></span><button type="button" class="api-test" onclick="testGoogleApi('maps', this)">Test</button></div></div>
+            <div class="api-card"><div class="api-top"><span class="api-ic"><i data-lucide="search"></i></span><b>Places</b></div><p>Search places and get place details.</p><div class="api-foot"><span id="placesResponse" class="api-res"></span><button type="button" class="api-test" onclick="testGoogleApi('places', this)">Test</button></div></div>
+            <div class="api-card"><div class="api-top"><span class="api-ic"><i data-lucide="route"></i></span><b>Directions</b></div><p>Routes and directions between addresses.</p><div class="api-foot"><span id="directionsResponse" class="api-res"></span><button type="button" class="api-test" onclick="testGoogleApi('directions', this)">Test</button></div></div>
+            <div class="api-card"><div class="api-top"><span class="api-ic"><i data-lucide="sparkles"></i></span><b>Gemini</b></div><p>Generative AI (LLM) for smart features.</p><div class="api-foot"><span id="geminiResponse" class="api-res"></span><button type="button" class="api-test" onclick="testGoogleApi('gemini', this)">Test</button></div></div>
+            <div class="api-card"><div class="api-top"><span class="api-ic"><i data-lucide="mic"></i></span><b>Speech-to-Text</b></div><p>Turn audio into text.</p><div class="api-foot"><span id="speechResponse" class="api-res"></span><button type="button" class="api-test" onclick="testGoogleApi('speech-to-text', this)">Test</button></div></div>
         </div>
-    </footer>
+    </section>
+
+    <footer id="contact"><span id="team">Built by your squad.</span><img src="data:image/png;base64,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" alt="Made with Skill-in" class="made-with-skill-in" /></footer>
 
     <script src="https://unpkg.com/lucide@0.453.0/dist/umd/lucide.min.js"></script>
     <script>
         if (window.lucide) { window.lucide.createIcons(); }
-        document.getElementById('year').textContent = new Date().getFullYear();
 
         // Load config.js (API_URL of your backend). Keep this: the platform checks that index.html loads config.js.
+        let configLoaded = false;
         const configScript = document.createElement('script');
         configScript.src = 'config.js';
-        configScript.onerror = function () { console.error('Failed to load config.js'); };
+        configScript.onload = function () { configLoaded = true; };
+        configScript.onerror = function () { configLoaded = false; console.error('Failed to load config.js'); };
         document.head.appendChild(configScript);
 
-        // Search is not connected to the backend yet; announce that to screen readers and sighted users alike.
-        document.getElementById('find').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const location = document.getElementById('location').value.trim();
-            const needs = Array.from(document.querySelectorAll('input[name="needs"]:checked')).map(function (c) { return c.nextElementSibling.textContent.trim(); });
-            const where = location ? ' in ' + location : '';
-            const what = needs.length ? ' with ' + needs.join(', ') : '';
-            document.getElementById('search-status').textContent = 'Search is coming soon. We will look for restaurants' + where + what + '.';
-        });
+        function apiBaseUrl() {
+            const config = typeof CONFIG !== 'undefined' ? CONFIG : (window.CONFIG || null);
+            let apiUrl = (config && config.API_URL) || '';
+            if (!apiUrl) return '';
+            if (apiUrl.includes('railway.app') && apiUrl.startsWith('http://')) apiUrl = apiUrl.replace('http://', 'https://');
+            return apiUrl.replace(/\/$/, '');
+        }
+
+        function showResult(el, ok, text) {
+            el.className = 'api-res' + (ok ? '' : ' error');
+            el.textContent = text;
+        }
+
+        async function testBackend() {
+            const button = document.getElementById('testButton');
+            const el = document.getElementById('response');
+            button.disabled = true;
+            el.className = 'api-res';
+            el.textContent = 'Loading...';
+            try {
+                if (!configLoaded) await new Promise(function (r) { setTimeout(r, 100); });
+                const apiUrl = apiBaseUrl();
+                if (!apiUrl) { showResult(el, false, 'API URL not configured in config.js.'); return; }
+                if (apiUrl.includes('railway.app/project/')) {
+                    showResult(el, false, 'config.js points to a Railway project page, not your service URL.');
+                    return;
+                }
+                const controller = new AbortController();
+                const timeoutId = setTimeout(function () { controller.abort(); }, 10000);
+                // Trailing slash prevents a Railway redirect from HTTPS to HTTP.
+                const res = await fetch(apiUrl + '/api/test/', {
+                    method: 'GET', mode: 'cors', credentials: 'omit', redirect: 'error',
+                    signal: controller.signal, headers: { 'Accept': 'application/json' }
+                });
+                clearTimeout(timeoutId);
+                if (res.ok) showResult(el, true, 'Successful');
+                else showResult(el, false, 'HTTP ' + res.status + ' ' + res.statusText);
+            } catch (error) {
+                showResult(el, false, (error && error.message) || String(error));
+            } finally {
+                button.disabled = false;
+            }
+        }
+
+        async function testGoogleApi(apiSlug, button) {
+            const idMap = { geocoding: 'geocodingResponse', maps: 'mapsResponse', places: 'placesResponse', directions: 'directionsResponse', gemini: 'geminiResponse', 'speech-to-text': 'speechResponse' };
+            const el = document.getElementById(idMap[apiSlug]);
+            if (!el) return;
+            if (button) button.disabled = true;
+            el.className = 'api-res';
+            el.textContent = 'Loading...';
+            try {
+                if (!configLoaded) await new Promise(function (r) { setTimeout(r, 100); });
+                const apiUrl = apiBaseUrl();
+                if (!apiUrl) { showResult(el, false, 'API URL not configured.'); return; }
+                const res = await fetch(apiUrl + '/api/google/' + apiSlug, { method: 'GET', mode: 'cors', credentials: 'omit', headers: { 'Accept': 'application/json' } });
+                const data = await res.json();
+                if (data.status === 'ok') showResult(el, true, 'Successful');
+                else showResult(el, false, data.message || data.status || 'Failed');
+            } catch (error) {
+                showResult(el, false, (error && error.message) || String(error));
+            } finally {
+                if (button) button.disabled = false;
+            }
+        }
     </script>
 </body>
 </html>
