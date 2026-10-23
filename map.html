@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Map</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Inter, system-ui, sans-serif; background: #1A1B1E; color: #E5E7EB; font-size: 14px; min-height: 100vh; padding: 60px 8%; text-align: center; }
+        h1 { font-size: 32px; margin-bottom: 8px; }
+        p.sub { color: #9CA3AF; margin-bottom: 28px; }
+        form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 28px; }
+        input { background: #222327; border: 1px solid #3F3F46; border-radius: 8px; color: #E5E7EB; padding: 10px 14px; font: inherit; font-size: 15px; width: min(360px, 100%); }
+        input:focus { outline: 2px solid #4FBF9F; }
+        button { background: #4FBF9F; color: #fff; border: none; border-radius: 8px; padding: 10px 22px; font: inherit; font-weight: 600; cursor: pointer; }
+        button:disabled { background: #2F5F51; cursor: wait; }
+        #status { min-height: 22px; margin-bottom: 16px; color: #9CA3AF; }
+        #status.error { color: #F87171; }
+        #map { max-width: 800px; width: 100%; margin: 0 auto; }
+        #map img { width: 100%; height: auto; border-radius: 12px; border: 1px solid #2A2B2F; display: none; }
+        #map img.shown { display: block; margin: 0 auto; }
+        a.back { display: inline-block; margin-top: 32px; color: #4FBF9F; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <h1>City Map</h1>
+    <p class="sub">Type a city name to see it on a map.</p>
+
+    <form id="cityForm">
+        <input id="cityInput" type="text" placeholder="e.g. Paris, France" maxlength="100" required autocomplete="off">
+        <button id="showButton" type="submit">Show map</button>
+    </form>
+
+    <div id="status"></div>
+    <div id="map"><img id="mapImage" alt=""></div>
+
+    <a class="back" href="index.html">&larr; Back to landing page</a>
+
+    <script>
+        // Load config.js (API_URL of your backend), same as index.html
+        let configLoaded = false;
+        const configScript = document.createElement('script');
+        configScript.src = 'config.js';
+        configScript.onload = function () { configLoaded = true; };
+        configScript.onerror = function () { configLoaded = false; console.error('Failed to load config.js'); };
+        document.head.appendChild(configScript);
+
+        function apiBaseUrl() {
+            const config = typeof CONFIG !== 'undefined' ? CONFIG : (window.CONFIG || null);
+            let apiUrl = (config && config.API_URL) || '';
+            if (!apiUrl) return '';
+            if (apiUrl.includes('railway.app') && apiUrl.startsWith('http://')) apiUrl = apiUrl.replace('http://', 'https://');
+            return apiUrl.replace(/\/$/, '');
+        }
+
+        const form = document.getElementById('cityForm');
+        const input = document.getElementById('cityInput');
+        const button = document.getElementById('showButton');
+        const status = document.getElementById('status');
+        const image = document.getElementById('mapImage');
+
+        function setStatus(text, isError) {
+            status.textContent = text;
+            status.className = isError ? 'error' : '';
+        }
+
+        form.addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const city = input.value.trim();
+            if (!city) return;
+
+            if (!configLoaded) await new Promise(function (r) { setTimeout(r, 100); });
+            const apiUrl = apiBaseUrl();
+            if (!apiUrl) { setStatus('API URL not configured in config.js.', true); return; }
+
+            button.disabled = true;
+            image.classList.remove('shown');
+            setStatus('Loading map for ' + city + '...', false);
+            try {
+                const res = await fetch(apiUrl + '/api/citymap?city=' + encodeURIComponent(city), { method: 'GET', mode: 'cors', credentials: 'omit' });
+                if (!res.ok) {
+                    const data = await res.json().catch(function () { return {}; });
+                    throw new Error(data.error || ('HTTP ' + res.status));
+                }
+                const blob = await res.blob();
+                if (image.dataset.url) URL.revokeObjectURL(image.dataset.url);
+                image.dataset.url = URL.createObjectURL(blob);
+                image.alt = 'Map of ' + city;
+                image.src = image.dataset.url;
+                image.classList.add('shown');
+                setStatus('Showing ' + city + '.', false);
+            } catch (error) {
+                setStatus('Could not show map: ' + error.message, true);
+            } finally {
+                button.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
