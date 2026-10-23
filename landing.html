@@ -58,12 +58,13 @@
 
     <script>
         // Load config.js (API_URL of your backend), same as index.html and map.html
-        let configLoaded = false;
-        const configScript = document.createElement('script');
-        configScript.src = 'config.js';
-        configScript.onload = function () { configLoaded = true; };
-        configScript.onerror = function () { configLoaded = false; console.error('Failed to load config.js'); };
-        document.head.appendChild(configScript);
+        const configLoaded = new Promise(function (resolve) {
+            const configScript = document.createElement('script');
+            configScript.src = 'config.js';
+            configScript.onload = resolve;
+            configScript.onerror = function () { console.error('Failed to load config.js'); resolve(); };
+            document.head.appendChild(configScript);
+        });
 
         function apiBaseUrl() {
             const config = typeof CONFIG !== 'undefined' ? CONFIG : (window.CONFIG || null);
@@ -89,7 +90,7 @@
             const city = input.value.trim();
             if (!city) return;
 
-            if (!configLoaded) await new Promise(function (r) { setTimeout(r, 100); });
+            await configLoaded;
             const apiUrl = apiBaseUrl();
             if (!apiUrl) { setStatus('API URL not configured in config.js.', true); return; }
 
