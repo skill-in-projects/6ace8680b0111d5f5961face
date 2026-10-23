@@ -3,157 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Product</title>
+    <title>City Finder</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { font-family: Inter, system-ui, sans-serif; background: #FFEB3B; color: #E5E7EB; font-size: 14px; min-height: 100vh; }
-        a { color: inherit; text-decoration: none; }
-        button { font: inherit; background: none; cursor: pointer; }
-        svg.lucide { width: 18px; height: 18px; }
+        body { font-family: Inter, system-ui, sans-serif; background: #1A1B1E; color: #E5E7EB; font-size: 15px; min-height: 100vh; }
 
         nav { display: flex; align-items: center; gap: 16px; padding: 14px 8%; border-bottom: 1px solid #2A2B2F; }
-        .brand { display: flex; gap: 10px; align-items: center; }
-        .brand .mark { width: 36px; height: 36px; border-radius: 8px; background: #4FBF9F; display: grid; place-items: center; color: #fff; }
-        .brand b { font-size: 18px; display: block; color: #fff; }
-        .brand small { font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: .12em; color: #4FBF9F; }
-        .links { margin: 0 auto; display: flex; gap: 24px; color: #A1A1AA; }
-        .links a:hover { color: #fff; }
-        .cta { background: #4FBF9F; color: #fff; padding: 9px 20px; border-radius: 8px; font-weight: 600; display: inline-block; }
+        .brand { font-weight: 700; font-size: 18px; color: #fff; }
+        .brand span { color: #4FBF9F; }
 
-        .hero { text-align: center; padding: 80px 8% 50px; background: radial-gradient(ellipse at 50% 30%, #23302D 0%, transparent 60%); }
-        .hero-leaf { display: block; width: 140px; height: 140px; margin: 0 auto 24px; }
-        .pill { display: inline-block; border: 1px solid #2F5F51; border-radius: 999px; padding: 6px 14px; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #4FBF9F; }
-        h1 { font-size: clamp(32px, 4.5vw, 60px); line-height: 1.1; margin: 28px 0 20px; color: #fff; }
-        h1 em { font-style: normal; color: #4FBF9F; }
-        .hero p { max-width: 660px; margin: 0 auto; color: #A1A1AA; font-size: 18px; line-height: 1.55; }
-        .btns { margin-top: 36px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-        .btns .cta { padding: 12px 28px; }
-        .ghost { border: 1px solid #3F3F46; padding: 12px 28px; border-radius: 8px; font-weight: 600; }
+        .hero { text-align: center; padding: 80px 8% 40px; background: radial-gradient(ellipse at 50% 0%, #23302D 0%, transparent 60%); }
+        .hero h1 { font-size: 40px; color: #fff; margin-bottom: 12px; }
+        .hero p { color: #9CA3AF; font-size: 17px; }
 
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; padding: 30px 8% 60px; }
-        .stat { border: 1px solid #2A2B2F; background: #222327; border-radius: 12px; padding: 24px; text-align: center; }
-        .stat b { font-size: 28px; color: #fff; display: block; }
-        .stat span { color: #A1A1AA; }
+        form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 32px 0 16px; }
+        input { background: #222327; border: 1px solid #3F3F46; border-radius: 8px; color: #E5E7EB; padding: 12px 16px; font: inherit; font-size: 16px; width: min(420px, 100%); }
+        input:focus { outline: 2px solid #4FBF9F; }
+        button { background: #4FBF9F; color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font: inherit; font-weight: 600; font-size: 16px; cursor: pointer; }
+        button:hover:not(:disabled) { background: #3FAE8E; }
+        button:disabled { background: #2F5F51; cursor: wait; }
 
-        .s-apis { padding: 10px 8% 50px; text-align: center; border-top: 1px solid #2A2B2F; }
-        .s-apis .pill { margin-top: 40px; }
-        .s-apis h2 { color: #fff; font-size: clamp(24px, 3vw, 34px); margin: 18px 0 8px; }
-        .s-sub { color: #A1A1AA; margin-bottom: 28px; }
-        .api-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; text-align: left; }
-        .api-card { border: 1px solid #2A2B2F; background: #222327; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-        .api-top { display: flex; align-items: center; gap: 10px; color: #fff; }
-        .api-ic { width: 30px; height: 30px; border-radius: 8px; background: rgba(79,191,159,.12); color: #4FBF9F; display: grid; place-items: center; }
-        .api-ic svg.lucide { width: 16px; height: 16px; }
-        .api-card p { color: #A1A1AA; font-size: 13px; line-height: 1.45; flex: 1; }
-        .api-foot { display: flex; align-items: flex-start; gap: 8px; }
-        .api-res { flex: 1; min-width: 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #4FBF9F; overflow-wrap: anywhere; }
-        .api-res.error, .api-res .error { color: #F87171; }
-        .api-res pre, .api-res code { white-space: pre-wrap; }
-        .api-test { padding: 5px 14px; border-radius: 8px; border: 1px solid #3F3F46; color: #E5E7EB; font-size: 12px; font-weight: 600; flex-shrink: 0; }
-        .api-test:hover { border-color: #4FBF9F; color: #4FBF9F; }
-        .api-test:disabled { opacity: .6; cursor: default; }
+        #status { min-height: 22px; text-align: center; color: #9CA3AF; }
+        #status.error { color: #F87171; }
 
-        .s-projects { padding: 10px 8% 50px; text-align: center; border-top: 1px solid #2A2B2F; }
-        .s-projects .pill { margin-top: 40px; }
-        .s-projects h2 { color: #fff; font-size: clamp(24px, 3vw, 34px); margin: 18px 0 8px; }
-        .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; text-align: left; }
-        .proj-card { border: 1px solid #2A2B2F; background: #222327; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-        .proj-card h3 { color: #fff; font-size: 15px; }
-        .notes { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-        .note { border-left: 2px solid #4FBF9F; padding: 6px 10px; color: #E5E7EB; font-size: 13px; line-height: 1.45; overflow-wrap: anywhere; }
-        .note time { display: block; color: #71717A; font-size: 11px; font-family: 'JetBrains Mono', monospace; margin-bottom: 2px; }
-        .notes .empty { color: #71717A; font-size: 13px; border-left: none; padding: 0; }
-        .note-form { display: flex; gap: 8px; }
-        .note-form input { flex: 1; min-width: 0; background: #1A1B1E; border: 1px solid #3F3F46; border-radius: 8px; color: #E5E7EB; padding: 8px 10px; font: inherit; font-size: 13px; }
-        .note-form input:focus { outline: none; border-color: #4FBF9F; }
-        .note-form button { padding: 8px 14px; border-radius: 8px; border: 1px solid #3F3F46; color: #E5E7EB; font-size: 12px; font-weight: 600; flex-shrink: 0; }
-        .note-form button:hover { border-color: #4FBF9F; color: #4FBF9F; }
-        .note-form button:disabled { opacity: .6; cursor: default; }
-        .proj-msg { font-size: 12px; color: #F87171; min-height: 14px; }
-
-        footer { padding: 18px 8%; border-top: 1px solid #2A2B2F; color: #71717A; font-size: 12px; display: flex; align-items: center; gap: 8px; }
-        footer img { height: 22px; width: auto; opacity: .85; }
-
-        @media (max-width: 640px) { .links { display: none; } nav { justify-content: space-between; } }
+        .result { max-width: 900px; margin: 16px auto 80px; padding: 0 8%; }
+        #mapImage { display: none; width: 100%; height: auto; border-radius: 14px; border: 1px solid #2A2B2F; }
+        #mapImage.shown { display: block; }
     </style>
 </head>
 <body>
-    <!-- Starter landing page of your squad's product. Edit it freely: as your product takes shape, this page becomes its home. -->
     <nav>
-        <div class="brand"><div class="mark"><i data-lucide="box"></i></div><div><b>Your Product</b><small>NAME COMING SOON</small></div></div>
-        <div class="links"><a href="#modules">Modules</a><a href="#starterApis">APIs</a><a href="#team">Team</a><a href="#contact">Contact</a></div>
-        <a class="cta" href="#starterApis">Get Started</a>
+        <a class="brand" href="index.html">City<span>Finder</span></a>
     </nav>
 
-    <header class="hero">
-        <svg class="hero-leaf" viewBox="0 0 200 200" role="img" aria-label="Marijuana leaf illustration">
-            <g fill="#4FBF9F" transform="translate(100 120)">
-                <path transform="rotate(0) scale(0.9)" d="M0,0 C-22,-30 -14,-80 0,-110 C14,-80 22,-30 0,0 Z"/>
-                <path transform="rotate(-30) scale(0.8)" d="M0,0 C-22,-30 -14,-80 0,-110 C14,-80 22,-30 0,0 Z"/>
-                <path transform="rotate(30) scale(0.8)" d="M0,0 C-22,-30 -14,-80 0,-110 C14,-80 22,-30 0,0 Z"/>
-                <path transform="rotate(-60) scale(0.65)" d="M0,0 C-22,-30 -14,-80 0,-110 C14,-80 22,-30 0,0 Z"/>
-                <path transform="rotate(60) scale(0.65)" d="M0,0 C-22,-30 -14,-80 0,-110 C14,-80 22,-30 0,0 Z"/>
-                <path transform="rotate(-85) scale(0.5)" d="M0,0 C-22,-30 -14,-80 0,-110 C14,-80 22,-30 0,0 Z"/>
-                <path transform="rotate(85) scale(0.5)" d="M0,0 C-22,-30 -14,-80 0,-110 C14,-80 22,-30 0,0 Z"/>
-            </g>
-            <rect x="97" y="118" width="6" height="40" rx="3" fill="#2F5F51"/>
-        </svg>
-        <span class="pill">&#9679; LAUNCHING SOON &middot; BUILT BY YOUR SQUAD</span>
-        <h1>Something Great<br><em>Is Being Built Here</em></h1>
-        <p>This is your squad's product landing page, live on the web. Every merge brings your work here. When your product takes shape, this page becomes its home.</p>
-        <div class="btns"><a class="cta" href="#modules">Start Building &rarr;</a><a class="ghost" href="#starterApis">Explore Starter APIs</a></div>
-    </header>
+    <section class="hero">
+        <h1>Where in the world?</h1>
+        <p>Type any city and see it on the map.</p>
 
-    <section class="stats" id="modules">
-        <div class="stat"><b>7</b><span>APIs Ready</span></div>
-        <div class="stat"><b>0</b><span>Modules Live</span></div>
-        <div class="stat"><b>1</b><span>Sprint Started</span></div>
-        <div class="stat"><b id="projectCount">&ndash;</b><span>projects in the database</span></div>
-        <div class="stat"><b>4</b><span>Team Members</span></div>
+        <form id="cityForm">
+            <input id="cityInput" type="text" placeholder="e.g. Paris, France" maxlength="100" required autocomplete="off" aria-label="City name">
+            <button id="showButton" type="submit">Show map</button>
+        </form>
+
+        <div id="status"></div>
     </section>
 
-    <section class="s-apis" id="starterApis">
-        <span class="pill">&#9679; STARTER APIS</span>
-        <h2>Ready when you are</h2>
-        <p class="s-sub">Pre-configured, free to use and already in your repo. Test them right from this page.</p>
-        <div class="api-grid">
-            <div class="api-card"><div class="api-top"><span class="api-ic"><i data-lucide="database"></i></span><b>Database</b></div><p>REST API and database connectivity (CRUD).</p><div class="api-foot"><span id="response" class="api-res"></span><button id="testButton" type="button" class="api-test" onclick="testBackend()">Test</button></div></div>
-            <div class="api-card"><div class="api-top"><span class="api-ic"><i data-lucide="map-pin"></i></span><b>Geocoding</b></div><p>Convert addresses to coordinates and back.</p><div class="api-foot"><span id="geocodingResponse" class="api-res"></span><button type="button" class="api-test" onclick="testGoogleApi('geocoding', this)">Test</button></div></div>
-            <div class="api-card"><div class="api-top"><span class="api-ic"><i data-lucide="map"></i></span><b>Maps JavaScript</b></div><p>Display interactive maps in the browser.</p><div class="api-foot"><span id="mapsResponse" class="api-res"></span><button type="button" class="api-test" onclick="testGoogleApi('maps', this)">Test</button></div></div>
-            <div class="api-card"><div class="api-top"><span class="api-ic"><i data-lucide="search"></i></span><b>Places</b></div><p>Search places and get place details.</p><div class="api-foot"><span id="placesResponse" class="api-res"></span><button type="button" class="api-test" onclick="testGoogleApi('places', this)">Test</button></div></div>
-            <div class="api-card"><div class="api-top"><span class="api-ic"><i data-lucide="route"></i></span><b>Directions</b></div><p>Routes and directions between addresses.</p><div class="api-foot"><span id="directionsResponse" class="api-res"></span><button type="button" class="api-test" onclick="testGoogleApi('directions', this)">Test</button></div></div>
-            <div class="api-card"><div class="api-top"><span class="api-ic"><i data-lucide="sparkles"></i></span><b>Gemini</b></div><p>Generative AI (LLM) for smart features.</p><div class="api-foot"><span id="geminiResponse" class="api-res"></span><button type="button" class="api-test" onclick="testGoogleApi('gemini', this)">Test</button></div></div>
-            <div class="api-card"><div class="api-top"><span class="api-ic"><i data-lucide="mic"></i></span><b>Speech-to-Text</b></div><p>Turn audio into text.</p><div class="api-foot"><span id="speechResponse" class="api-res"></span><button type="button" class="api-test" onclick="testGoogleApi('speech-to-text', this)">Test</button></div></div>
-        </div>
-    </section>
+    <div class="result">
+        <img id="mapImage" alt="">
+    </div>
 
-    <section class="s-projects" id="projects">
-        <span class="pill">&#9679; PROJECTS &amp; NOTES</span>
-        <h2>Notes per project</h2>
-        <p class="s-sub">Notes are stored in the database. Add one under any project.</p>
-        <div class="proj-grid" id="projectGrid"><p class="s-sub">Loading projects...</p></div>
-    </section>
-
-    <footer id="contact"><span id="team">Built by your squad.</span><img src="data:image/png;base64,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" alt="Made with Skill-in" class="made-with-skill-in" /></footer>
-
-    <footer>New Project Design - built on Skill-In &middot; <span id="footer-year"></span></footer>
-
-    <script src="https://unpkg.com/lucide@0.453.0/dist/umd/lucide.min.js"></script>
     <script>
-        if (window.lucide) { window.lucide.createIcons(); }
-        document.getElementById('footer-year').textContent = new Date().getFullYear();
-
         // Load config.js (API_URL of your backend). Keep this: the platform checks that index.html loads config.js.
-        let configLoaded = false;
-        const configScript = document.createElement('script');
-        configScript.src = 'config.js';
-        configScript.onload = function () { configLoaded = true; };
-        configScript.onerror = function () { configLoaded = false; console.error('Failed to load config.js'); };
-        document.head.appendChild(configScript);
+        const configLoaded = new Promise(function (resolve) {
+            const configScript = document.createElement('script');
+            configScript.src = 'config.js';
+            configScript.onload = resolve;
+            configScript.onerror = function () { console.error('Failed to load config.js'); resolve(); };
+            document.head.appendChild(configScript);
+        });
 
         function apiBaseUrl() {
             const config = typeof CONFIG !== 'undefined' ? CONFIG : (window.CONFIG || null);
@@ -163,195 +73,48 @@
             return apiUrl.replace(/\/$/, '');
         }
 
-        function showResult(el, ok, text) {
-            el.className = 'api-res' + (ok ? '' : ' error');
-            el.textContent = text;
+        const form = document.getElementById('cityForm');
+        const input = document.getElementById('cityInput');
+        const button = document.getElementById('showButton');
+        const status = document.getElementById('status');
+        const image = document.getElementById('mapImage');
+
+        function setStatus(text, isError) {
+            status.textContent = text;
+            status.className = isError ? 'error' : '';
         }
 
-        // Shared helper for the notes API: waits for config.js, then sends GET (no body) or POST (with body)
-        async function apiFetch(path, body) {
-            if (!configLoaded) await new Promise(function (r) { setTimeout(r, 100); });
-            const apiUrl = apiBaseUrl();
-            if (!apiUrl) throw new Error('API URL not configured in config.js.');
-            const isPost = body !== undefined;
-            const res = await fetch(apiUrl + path, {
-                method: isPost ? 'POST' : 'GET',
-                mode: 'cors', credentials: 'omit',
-                headers: isPost ? { 'Accept': 'application/json', 'Content-Type': 'application/json' } : { 'Accept': 'application/json' },
-                body: isPost ? JSON.stringify(body) : undefined
-            });
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            return res.json();
-        }
-
-        function renderNotes(projectId, notes) {
-            const list = document.getElementById('notes-' + projectId);
-            list.textContent = '';
-            if (notes.length === 0) {
-                const empty = document.createElement('li');
-                empty.className = 'empty';
-                empty.textContent = 'No notes yet.';
-                list.appendChild(empty);
-                return;
-            }
-            for (const note of notes) {
-                const li = document.createElement('li');
-                li.className = 'note';
-                const time = document.createElement('time');
-                time.dateTime = note.createdAt;
-                time.textContent = new Date(note.createdAt).toLocaleString();
-                li.append(time, note.text); // textContent-style insertion: note text is never parsed as HTML
-                list.appendChild(li);
-            }
-        }
-
-        async function loadNotes(projectId) {
-            const list = document.getElementById('notes-' + projectId);
-            try {
-                renderNotes(projectId, await apiFetch('/api/test/' + projectId + '/notes'));
-            } catch (error) {
-                list.textContent = '';
-                const li = document.createElement('li');
-                li.className = 'empty';
-                li.textContent = 'Could not load notes (' + error.message + ').';
-                list.appendChild(li);
-            }
-        }
-
-        async function addNote(event, projectId, input, button, msg) {
+        form.addEventListener('submit', async function (event) {
             event.preventDefault();
-            const text = input.value.trim();
-            if (!text) return;
+            const city = input.value.trim();
+            if (!city) return;
+
+            await configLoaded;
+            const apiUrl = apiBaseUrl();
+            if (!apiUrl) { setStatus('API URL not configured in config.js.', true); return; }
+
             button.disabled = true;
-            msg.textContent = '';
+            image.classList.remove('shown');
+            setStatus('Finding ' + city + '...', false);
             try {
-                await apiFetch('/api/test/' + projectId + '/notes', { text: text });
-                input.value = '';
-                await loadNotes(projectId);
+                const res = await fetch(apiUrl + '/api/citymap?city=' + encodeURIComponent(city), { method: 'GET', mode: 'cors', credentials: 'omit' });
+                if (!res.ok) {
+                    const data = await res.json().catch(function () { return {}; });
+                    throw new Error(data.error || ('HTTP ' + res.status));
+                }
+                const blob = await res.blob();
+                if (image.dataset.url) URL.revokeObjectURL(image.dataset.url);
+                image.dataset.url = URL.createObjectURL(blob);
+                image.alt = 'Map of ' + city;
+                image.src = image.dataset.url;
+                image.classList.add('shown');
+                setStatus('Showing ' + city + '.', false);
             } catch (error) {
-                msg.textContent = 'Could not add note: ' + error.message;
+                setStatus('Could not show map: ' + error.message, true);
             } finally {
                 button.disabled = false;
             }
-        }
-
-        function renderProjectCard(project) {
-            const card = document.createElement('div');
-            card.className = 'proj-card';
-
-            const title = document.createElement('h3');
-            title.textContent = project.name;
-
-            const list = document.createElement('ul');
-            list.className = 'notes';
-            list.id = 'notes-' + project.id;
-
-            const form = document.createElement('form');
-            form.className = 'note-form';
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.maxLength = 2000;
-            input.placeholder = 'Add a note...';
-            input.setAttribute('aria-label', 'New note for ' + project.name);
-            const button = document.createElement('button');
-            button.type = 'submit';
-            button.textContent = 'Add';
-            form.append(input, button);
-
-            const msg = document.createElement('div');
-            msg.className = 'proj-msg';
-            form.addEventListener('submit', function (event) { addNote(event, project.id, input, button, msg); });
-
-            card.append(title, list, form, msg);
-            return card;
-        }
-
-        async function loadProjects() {
-            const grid = document.getElementById('projectGrid');
-            try {
-                const projects = await apiFetch('/api/test');
-                grid.textContent = '';
-                if (projects.length === 0) {
-                    grid.innerHTML = '<p class="s-sub">No projects in the database yet.</p>';
-                    return;
-                }
-                for (const project of projects) grid.appendChild(renderProjectCard(project));
-                await Promise.all(projects.map(function (p) { return loadNotes(p.id); }));
-            } catch (error) {
-                grid.innerHTML = '<p class="s-sub"></p>';
-                grid.firstChild.textContent = 'Could not load projects (' + error.message + ').';
-            }
-        }
-        window.addEventListener('load', loadProjects);
-
-        async function loadProjectCount() {
-            const el = document.getElementById('projectCount');
-            try {
-                if (!configLoaded) await new Promise(function (r) { setTimeout(r, 100); });
-                const apiUrl = apiBaseUrl();
-                if (!apiUrl) { el.textContent = '?'; return; }
-                const res = await fetch(apiUrl + '/api/test/count', { method: 'GET', mode: 'cors', credentials: 'omit', headers: { 'Accept': 'application/json' } });
-                if (!res.ok) throw new Error('HTTP ' + res.status);
-                const data = await res.json();
-                el.textContent = data.count;
-            } catch (error) {
-                el.textContent = '?';
-            }
-        }
-        window.addEventListener('load', loadProjectCount);
-
-        async function testBackend() {
-            const button = document.getElementById('testButton');
-            const el = document.getElementById('response');
-            button.disabled = true;
-            el.className = 'api-res';
-            el.textContent = 'Loading...';
-            try {
-                if (!configLoaded) await new Promise(function (r) { setTimeout(r, 100); });
-                const apiUrl = apiBaseUrl();
-                if (!apiUrl) { showResult(el, false, 'API URL not configured in config.js.'); return; }
-                if (apiUrl.includes('railway.app/project/')) {
-                    showResult(el, false, 'config.js points to a Railway project page, not your service URL.');
-                    return;
-                }
-                const controller = new AbortController();
-                const timeoutId = setTimeout(function () { controller.abort(); }, 10000);
-                // Trailing slash prevents a Railway redirect from HTTPS to HTTP.
-                const res = await fetch(apiUrl + '/api/test/', {
-                    method: 'GET', mode: 'cors', credentials: 'omit', redirect: 'error',
-                    signal: controller.signal, headers: { 'Accept': 'application/json' }
-                });
-                clearTimeout(timeoutId);
-                if (res.ok) showResult(el, true, 'Successful');
-                else showResult(el, false, 'HTTP ' + res.status + ' ' + res.statusText);
-            } catch (error) {
-                showResult(el, false, (error && error.message) || String(error));
-            } finally {
-                button.disabled = false;
-            }
-        }
-
-        async function testGoogleApi(apiSlug, button) {
-            const idMap = { geocoding: 'geocodingResponse', maps: 'mapsResponse', places: 'placesResponse', directions: 'directionsResponse', gemini: 'geminiResponse', 'speech-to-text': 'speechResponse' };
-            const el = document.getElementById(idMap[apiSlug]);
-            if (!el) return;
-            if (button) button.disabled = true;
-            el.className = 'api-res';
-            el.textContent = 'Loading...';
-            try {
-                if (!configLoaded) await new Promise(function (r) { setTimeout(r, 100); });
-                const apiUrl = apiBaseUrl();
-                if (!apiUrl) { showResult(el, false, 'API URL not configured.'); return; }
-                const res = await fetch(apiUrl + '/api/google/' + apiSlug, { method: 'GET', mode: 'cors', credentials: 'omit', headers: { 'Accept': 'application/json' } });
-                const data = await res.json();
-                if (data.status === 'ok') showResult(el, true, 'Successful');
-                else showResult(el, false, data.message || data.status || 'Failed');
-            } catch (error) {
-                showResult(el, false, (error && error.message) || String(error));
-            } finally {
-                if (button) button.disabled = false;
-            }
-        }
+        });
     </script>
 </body>
 </html>
