@@ -18,6 +18,7 @@
         .hero { text-align: center; padding: 80px 8% 40px; background: radial-gradient(ellipse at 50% 0%, #23302D 0%, transparent 60%); }
         .hero h1 { font-size: 40px; color: #fff; margin-bottom: 12px; }
         .hero p { color: #9CA3AF; font-size: 17px; }
+        .hero h1 .glow { color: #89CFF0; text-shadow: 0 0 8px rgba(137, 207, 240, 0.8), 0 0 20px rgba(137, 207, 240, 0.5), 0 0 40px rgba(137, 207, 240, 0.3); }
 
         form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 32px 0 16px; }
         input { background: #222327; border: 1px solid #3F3F46; border-radius: 8px; color: #E5E7EB; padding: 12px 16px; font: inherit; font-size: 16px; width: min(420px, 100%); }
@@ -40,7 +41,7 @@
     </nav>
 
     <section class="hero">
-        <h1>Where in the world?</h1>
+        <h1>Where in the <span class="glow">world</span>?</h1>
         <p>Type any city and see it on the map.</p>
 
         <form id="cityForm">
