@@ -33,6 +33,9 @@
         .result { max-width: 900px; margin: 16px auto 80px; padding: 0 8%; }
         #mapImage { display: none; width: 100%; height: auto; border-radius: 14px; border: 1px solid #2A2B2F; }
         #mapImage.shown { display: block; }
+
+        .israel-map { display: block; width: 160px; height: auto; margin: 32px auto 0; }
+        .israel-map path { fill: rgba(79, 191, 159, 0.15); stroke: #4FBF9F; stroke-width: 1.5; stroke-linejoin: round; }
     </style>
 </head>
 <body>
@@ -50,6 +53,11 @@
         </form>
 
         <div id="status"></div>
+
+        <svg class="israel-map" viewBox="0 0 150 395" role="img" aria-label="Map of Israel">
+            <title>Map of Israel</title>
+            <path d="M76,26 L85,25 L106,25 L119,10 L128,10 L140,25 L144,50 L123,63 L115,85 L115,135 L111,160 L119,185 L115,235 L102,295 L89,355 L68,385 L61,385 L34,285 L6,213 L2,210 L38,155 L48,127 L55,102 L60,85 L66,53 L72,42 Z"/>
+        </svg>
     </section>
 
     <div class="result">
