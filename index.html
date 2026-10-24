@@ -34,8 +34,11 @@
         #mapImage { display: none; width: 100%; height: auto; border-radius: 14px; border: 1px solid #2A2B2F; }
         #mapImage.shown { display: block; }
 
-        .israel-map { display: block; width: 160px; height: auto; margin: 32px auto 0; }
-        .israel-map path { fill: rgba(79, 191, 159, 0.15); stroke: #4FBF9F; stroke-width: 1.5; stroke-linejoin: round; }
+        .israel-map { display: block; width: 235px; height: auto; margin: 32px auto 0; }
+        .israel-map > path { fill: rgba(79, 191, 159, 0.15); stroke: #4FBF9F; stroke-width: 1.5; stroke-linejoin: round; }
+        .israel-map .flag-pole { stroke: #D1D5DB; stroke-width: 1.8; stroke-linecap: round; }
+        .israel-map .flag-base, .israel-map .flag-top { fill: #D1D5DB; }
+        .israel-map .flag-base { fill: #fff; stroke: #4FBF9F; stroke-width: 1.5; }
     </style>
 </head>
 <body>
@@ -54,9 +57,18 @@
 
         <div id="status"></div>
 
-        <svg class="israel-map" viewBox="0 0 150 395" role="img" aria-label="Map of Israel">
-            <title>Map of Israel</title>
+        <svg class="israel-map" viewBox="0 0 220 395" role="img" aria-label="Map of Israel with a flag planted in Jerusalem">
+            <title>Map of Israel with a flag planted in Jerusalem</title>
             <path d="M76,26 L85,25 L106,25 L119,10 L128,10 L140,25 L144,50 L123,63 L115,85 L115,135 L111,160 L119,185 L115,235 L102,295 L89,355 L68,385 L61,385 L34,285 L6,213 L2,210 L38,155 L48,127 L55,102 L60,85 L66,53 L72,42 Z"/>
+            <line class="flag-pole" x1="87" y1="158" x2="150" y2="20"/>
+            <circle class="flag-base" cx="87" cy="158" r="3"/>
+            <circle class="flag-top" cx="150" cy="20" r="2.5"/>
+            <g class="flag" transform="translate(150 20) rotate(-6)">
+                <rect width="60" height="44" fill="#fff"/>
+                <rect y="5" width="60" height="5" fill="#0038B8"/>
+                <rect y="34" width="60" height="5" fill="#0038B8"/>
+                <path d="M30,10 L40.4,28 L19.6,28 Z M30,34 L19.6,16 L40.4,16 Z" fill="none" stroke="#0038B8" stroke-width="2.2"/>
+            </g>
         </svg>
     </section>
 
