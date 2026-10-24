@@ -34,6 +34,9 @@
         .result { max-width: 900px; margin: 16px auto 80px; padding: 0 8%; }
         #mapImage { display: none; width: 100%; height: auto; border-radius: 14px; border: 1px solid #2A2B2F; }
         #mapImage.shown { display: block; }
+        #description { display: none; max-width: 720px; margin: 20px auto 0; color: #D1D5DB; font-size: 16px; line-height: 1.6; text-align: left; }
+        #description.shown { display: block; }
+        #description.error { color: #F87171; }
 
         .israel-map { display: block; width: 235px; height: auto; margin: 32px auto 0; }
         .israel-map > path { fill: rgba(79, 191, 159, 0.15); stroke: #4FBF9F; stroke-width: 1.5; stroke-linejoin: round; }
@@ -75,6 +78,7 @@
 
     <div class="result">
         <img id="mapImage" alt="">
+        <p id="description"></p>
     </div>
 
     <script>
@@ -100,10 +104,31 @@
         const button = document.getElementById('showButton');
         const status = document.getElementById('status');
         const image = document.getElementById('mapImage');
+        const description = document.getElementById('description');
+        let descriptionRequestId = 0;
 
         function setStatus(text, isError) {
             status.textContent = text;
             status.className = isError ? 'error' : '';
+        }
+
+        // Loads the Gemini description. A newer search makes older replies ignored.
+        async function loadDescription(apiUrl, city) {
+            const requestId = ++descriptionRequestId;
+            description.classList.remove('shown', 'error');
+            description.textContent = 'Writing a description of ' + city + '...';
+            description.classList.add('shown');
+            try {
+                const res = await fetch(apiUrl + '/api/citydescription?city=' + encodeURIComponent(city), { method: 'GET', mode: 'cors', credentials: 'omit' });
+                const data = await res.json().catch(function () { return {}; });
+                if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+                if (requestId !== descriptionRequestId) return;
+                description.textContent = data.description;
+            } catch (error) {
+                if (requestId !== descriptionRequestId) return;
+                description.textContent = 'Could not load the description: ' + error.message;
+                description.classList.add('error');
+            }
         }
 
         form.addEventListener('submit', async function (event) {
@@ -118,6 +143,7 @@
             button.disabled = true;
             image.classList.remove('shown');
             setStatus('Finding ' + city + '...', false);
+            loadDescription(apiUrl, city);
             try {
                 const res = await fetch(apiUrl + '/api/citymap?city=' + encodeURIComponent(city), { method: 'GET', mode: 'cors', credentials: 'omit' });
                 if (!res.ok) {
