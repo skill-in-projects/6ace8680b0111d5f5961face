@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sheet Playground</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Inter, system-ui, sans-serif; background: #1A1B1E; color: #E5E7EB; font-size: 15px; min-height: 100vh; }
+        a { color: inherit; text-decoration: none; }
+
+        nav { display: flex; align-items: center; gap: 16px; padding: 14px 8%; border-bottom: 1px solid #2A2B2F; }
+        .brand { font-weight: 700; font-size: 18px; color: #fff; }
+        .brand span { color: #4FBF9F; }
+
+        .hero { text-align: center; padding: 60px 8% 30px; background: radial-gradient(ellipse at 50% 0%, #23302D 0%, transparent 60%); }
+        .hero h1 { font-size: 40px; color: #fff; margin-bottom: 12px; }
+        .hero h1 .glow { color: #89CFF0; text-shadow: 0 0 8px rgba(137, 207, 240, 0.8), 0 0 20px rgba(137, 207, 240, 0.5), 0 0 40px rgba(137, 207, 240, 0.3); }
+        .hero p { color: #9CA3AF; font-size: 17px; max-width: 680px; margin: 0 auto; }
+        .hero code { color: #4FBF9F; font-family: ui-monospace, Menlo, Consolas, monospace; }
+
+        .toolbar { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 24px 0 12px; }
+        button { background: #4FBF9F; color: #fff; border: none; border-radius: 8px; padding: 10px 20px; font: inherit; font-weight: 600; font-size: 15px; cursor: pointer; }
+        button:hover { background: #3FAE8E; }
+        button.ghost { background: #222327; color: #E5E7EB; border: 1px solid #3F3F46; }
+        button.ghost:hover { background: #2A2B2F; }
+
+        #status { min-height: 22px; text-align: center; color: #9CA3AF; }
+
+        .formula { display: flex; align-items: center; gap: 10px; max-width: 1100px; margin: 8px auto 10px; padding: 0 8%; }
+        #cellName { min-width: 64px; text-align: center; background: #222327; border: 1px solid #3F3F46; border-radius: 6px; padding: 7px 8px; font-weight: 600; }
+        #formulaBar { flex: 1; min-width: 0; background: #222327; border: 1px solid #3F3F46; border-radius: 6px; padding: 7px 10px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 14px; min-height: 36px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        .sheet-wrap { overflow: auto; max-height: 62vh; margin: 0 8%; border: 1px solid #2A2B2F; border-radius: 10px; background: #1A1B1E; }
+        table { border-collapse: separate; border-spacing: 0; }
+        th, td { border-right: 1px solid #2A2B2F; border-bottom: 1px solid #2A2B2F; min-width: 110px; }
+        th { background: #24252A; color: #9CA3AF; font-weight: 600; font-size: 13px; padding: 6px 0; text-align: center; position: sticky; top: 0; z-index: 2; }
+        th.rowhead { min-width: 44px; width: 44px; position: sticky; left: 0; z-index: 1; }
+        thead th.rowhead { z-index: 3; }
+        td { padding: 0; }
+        td input { display: block; width: 100%; min-width: 110px; background: transparent; border: 0; outline: none; color: #E5E7EB; font: inherit; font-size: 14px; padding: 7px 8px; }
+        td input:focus { outline: 2px solid #4FBF9F; outline-offset: -2px; background: #1F2F2B; }
+        td input.error { color: #F87171; }
+
+        .help { text-align: center; color: #6B7280; font-size: 13px; margin: 14px 8% 80px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a class="brand" href="index.html">City<span>Finder</span></a>
+    </nav>
+
+    <section class="hero">
+        <h1>Sheet <span class="glow">Playground</span></h1>
+        <p>A spreadsheet in your browser. Click any cell and type a number, some text, or a formula such as <code>=SUM(B2:B4)</code>. Your sheet is saved in this browser.</p>
+    </section>
+
+    <div class="toolbar">
+        <button id="exampleBtn" class="ghost" type="button">Load example</button>
+        <button id="clearBtn" class="ghost" type="button">Clear sheet</button>
+    </div>
+    <div id="status"></div>
+
+    <div class="formula">
+        <span id="cellName">A1</span>
+        <div id="formulaBar"></div>
+    </div>
+
+    <div class="sheet-wrap">
+        <table id="sheet"></table>
+    </div>
+
+    <p class="help">Enter moves down, Tab moves right, Esc cancels an edit. Formulas support + - * / ^, SUM, AVERAGE, MIN, MAX, COUNT, ROUND and ranges like A1:B3.</p>
+
+    <script src="sheet.js"></script>
+</body>
+</html>
