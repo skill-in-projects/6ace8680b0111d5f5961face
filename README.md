@@ -14,3 +14,4 @@
 - `config.js` - API configuration
 - `style.css` - Styling
 
+Runner hardening check 2026-10-29.
