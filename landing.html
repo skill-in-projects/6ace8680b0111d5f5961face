@@ -33,6 +33,15 @@
         .result { max-width: 900px; margin: 16px auto 80px; padding: 0 8%; }
         #mapImage { display: none; width: 100%; height: auto; border-radius: 14px; border: 1px solid #2A2B2F; }
         #mapImage.shown { display: block; }
+
+        .signin { display: flex; flex-direction: column; align-items: center; gap: 12px; margin: 0 0 24px; min-height: 44px; }
+        #userBox { display: flex; align-items: center; gap: 10px; color: #E5E7EB; }
+        #userBox[hidden], #googleButton[hidden] { display: none; }
+        #userPicture { width: 32px; height: 32px; border-radius: 50%; }
+        #signOutBtn { background: #222327; border: 1px solid #3F3F46; padding: 6px 14px; font-size: 14px; }
+        #signOutBtn:hover { background: #2E2F34; }
+        #authStatus { min-height: 22px; color: #9CA3AF; font-size: 14px; }
+        #authStatus.error { color: #F87171; }
     </style>
 </head>
 <body>
@@ -48,6 +57,16 @@
             <input id="cityInput" type="text" placeholder="e.g. Paris, France" maxlength="100" required autocomplete="off" aria-label="City name">
             <button id="showButton" type="submit">Show map</button>
         </form>
+
+        <div class="signin">
+            <div id="googleButton" hidden></div>
+            <div id="userBox" hidden>
+                <img id="userPicture" alt="">
+                <span id="userName"></span>
+                <button id="signOutBtn" type="button">Sign out</button>
+            </div>
+            <div id="authStatus"></div>
+        </div>
 
         <div id="status"></div>
     </section>
@@ -116,6 +135,93 @@
                 button.disabled = false;
             }
         });
+
+        // Google sign-in. The backend gives us the Client ID (GET /api/auth/config), then checks the
+        // Google sign-in it gets back (POST /api/auth/google) and returns our own token, kept in localStorage.
+        const TOKEN_KEY = 'skillin.token';
+        const googleButton = document.getElementById('googleButton');
+        const userBox = document.getElementById('userBox');
+        const userPicture = document.getElementById('userPicture');
+        const userName = document.getElementById('userName');
+        const authStatus = document.getElementById('authStatus');
+
+        const gisLoaded = new Promise(function (resolve) {
+            const gisScript = document.createElement('script');
+            gisScript.src = 'https://accounts.google.com/gsi/client';
+            gisScript.onload = resolve;
+            gisScript.onerror = function () { resolve(); };
+            document.head.appendChild(gisScript);
+        });
+
+        function setAuthStatus(text, isError) {
+            authStatus.textContent = text;
+            authStatus.className = isError ? 'error' : '';
+        }
+
+        function showUser(user) {
+            userPicture.src = user.picture || '';
+            userPicture.hidden = !user.picture;
+            userName.textContent = user.name;
+            userBox.hidden = false;
+            googleButton.hidden = true;
+            setAuthStatus('', false);
+        }
+
+        // Reloading starts the page again with no token, so the sign-in button is drawn fresh
+        function signOut() {
+            localStorage.removeItem(TOKEN_KEY);
+            location.reload();
+        }
+
+        async function handleGoogleCredential(response) {
+            await configLoaded;
+            setAuthStatus('Signing you in...', false);
+            try {
+                const res = await fetch(apiBaseUrl() + '/api/auth/google', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ credential: response.credential })
+                });
+                const data = await res.json().catch(function () { return {}; });
+                if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+                localStorage.setItem(TOKEN_KEY, data.token);
+                showUser(data.user);
+            } catch (error) {
+                setAuthStatus('Sign-in failed: ' + error.message, true);
+            }
+        }
+
+        async function setupSignIn() {
+            await configLoaded;
+            const apiUrl = apiBaseUrl();
+            if (!apiUrl) { setAuthStatus('API URL not configured in config.js.', true); return; }
+
+            // If we already have a token from an earlier visit, check that it still works
+            const savedToken = localStorage.getItem(TOKEN_KEY);
+            if (savedToken) {
+                try {
+                    const me = await fetch(apiUrl + '/api/auth/me', { headers: { Authorization: 'Bearer ' + savedToken } });
+                    if (me.ok) { showUser(await me.json()); return; }
+                } catch (error) { /* backend unreachable: fall through to the sign-in button */ }
+                localStorage.removeItem(TOKEN_KEY);
+            }
+
+            let clientId = null;
+            try {
+                const cfgRes = await fetch(apiUrl + '/api/auth/config');
+                clientId = (await cfgRes.json()).clientId;
+            } catch (error) { /* handled below */ }
+            if (!clientId) { setAuthStatus('Google sign-in is not set up yet.', false); return; }
+
+            await gisLoaded;
+            if (!window.google) { setAuthStatus('Could not load Google sign-in.', true); return; }
+            google.accounts.id.initialize({ client_id: clientId, callback: handleGoogleCredential });
+            googleButton.hidden = false;
+            google.accounts.id.renderButton(googleButton, { theme: 'filled_black', size: 'large', text: 'signin_with' });
+        }
+
+        document.getElementById('signOutBtn').addEventListener('click', signOut);
+        setupSignIn();
     </script>
 </body>
 </html>
