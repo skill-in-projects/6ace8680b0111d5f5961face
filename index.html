@@ -36,11 +36,6 @@
         #cellName { min-width: 64px; text-align: center; background: #FFFFFF; border: 1px solid #D1D5DB; border-radius: 6px; padding: 7px 8px; font-weight: 600; }
         #formulaBar { flex: 1; min-width: 0; background: #FFFFFF; border: 1px solid #D1D5DB; border-radius: 6px; padding: 7px 10px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 14px; min-height: 36px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .frog { position: absolute; top: 0; left: 0; transform: translate(-50%, -100%); transition: left 0.6s ease-in-out; font-size: 22px; line-height: 1; pointer-events: none; }
-        .frog-body { display: inline-block; }
-        .frog.jumping .frog-body { animation: frog-hop 0.6s ease-in-out; }
-        @keyframes frog-hop { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-26px); } }
-
         .sheet-wrap { overflow: auto; max-height: 62vh; margin: 0 8%; border: 1px solid #E5E7EB; border-radius: 10px; background: #FFFFFF; }
         table { border-collapse: separate; border-spacing: 0; }
         th, td { border-right: 1px solid #E5E7EB; border-bottom: 1px solid #E5E7EB; min-width: 110px; }
@@ -75,7 +70,6 @@
     <div class="formula">
         <span id="cellName">A1</span>
         <div id="formulaBar"></div>
-        <span id="frog" class="frog" aria-hidden="true"><span class="frog-body">💩</span></span>
     </div>
 
     <div class="sheet-wrap">
@@ -92,50 +86,5 @@
         document.head.appendChild(configScript);
     </script>
     <script src="sheet.js"></script>
-    <script>
-        // Frog that hops between the cell name box and the formula bar. It only hops while the page is visible.
-        const frog = document.getElementById('frog');
-        const frogRow = frog.parentElement;
-        const frogTargets = [document.getElementById('cellName'), document.getElementById('formulaBar')];
-        let frogIndex = 0;
-        let frogTimer = null;
-
-        function placeFrog(target) {
-            const rowRect = frogRow.getBoundingClientRect();
-            const targetRect = target.getBoundingClientRect();
-            frog.style.left = (targetRect.left - rowRect.left + targetRect.width / 2) + 'px';
-        }
-
-        function hopFrog() {
-            frogIndex = (frogIndex + 1) % frogTargets.length;
-            placeFrog(frogTargets[frogIndex]);
-            frog.classList.remove('jumping');
-            void frog.offsetWidth; // restart the hop animation
-            frog.classList.add('jumping');
-        }
-
-        function startFrog() {
-            if (frogTimer || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-            frogTimer = setInterval(hopFrog, 2400);
-        }
-
-        function stopFrog() {
-            clearInterval(frogTimer);
-            frogTimer = null;
-        }
-
-        // Start the frog on the first box without animating it in from the left edge.
-        frog.style.transition = 'none';
-        placeFrog(frogTargets[frogIndex]);
-        void frog.offsetWidth;
-        frog.style.transition = '';
-
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) stopFrog();
-            else startFrog();
-        });
-        window.addEventListener('resize', () => placeFrog(frogTargets[frogIndex]));
-        startFrog();
-    </script>
 </body>
 </html>
